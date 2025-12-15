@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import ProjectModal from './components/ProjectModal';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 import { mockProjects } from './data/mockProjects';
@@ -11,7 +14,6 @@ import { mockProjects } from './data/mockProjects';
 import './App.css';
 
 function App() {
-  const [page, setPage] = useState('home');
   const [projects, setProjects] = useState(mockProjects);
   
   // State for Add/Edit Modal
@@ -54,32 +56,29 @@ function App() {
     setDeletingProject(null);
   };
 
-  const renderPage = () => {
-    switch (page) {
-      case 'projects':
-        return (
-          <ProjectsPage
-            projects={projects}
-            onAdd={handleAddProject}
-            onEdit={handleEditProject}
-            onDelete={handleDeleteProject}
-          />
-        );
-      case 'about':
-        return <AboutPage />;
-      case 'home':
-      default:
-        return <HomePage />;
-    }
-  };
-
   return (
-    <>
-      <Header setPage={setPage} />
+    <BrowserRouter>
+      <Header />
       <main>
-        {renderPage()}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route 
+            path="/projects" 
+            element={
+              <ProjectsPage
+                projects={projects}
+                onAdd={handleAddProject}
+                onEdit={handleEditProject}
+                onDelete={handleDeleteProject}
+              />
+            } 
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
       </main>
-      <Footer setPage={setPage} />
+      <Footer />
       
       <ProjectModal 
         show={showProjectModal}
@@ -94,7 +93,7 @@ function App() {
         onConfirm={handleConfirmDelete}
         onCancel={() => setShowDeleteModal(false)}
       />
-    </>
+    </BrowserRouter>
   );
 }
 

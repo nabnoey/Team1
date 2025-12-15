@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from '../i18n/LanguageContext';
 
-const Header = ({ setPage }) => {
+const Header = () => {
   const { t, setLanguage, language } = useTranslation();
 
   const handleLanguageChange = () => {
@@ -12,9 +13,9 @@ const Header = ({ setPage }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" onClick={() => setPage('home')}>
+        <Link className="navbar-brand" to="/">
           <strong>System1</strong>
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -29,19 +30,29 @@ const Header = ({ setPage }) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => setPage('home')}>
+              <Link className="nav-link" to="/">
                 {t('home')}
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => setPage('projects')}>
+              <Link className="nav-link" to="/projects">
                 {t('projects')}
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => setPage('about')}>
+              <Link className="nav-link" to="/about">
                 {t('about')}
-              </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/register">
+                Register
+              </Link>
             </li>
             <li className="nav-item ms-3">
               <button className="btn btn-outline-light btn-sm" onClick={handleLanguageChange}>
